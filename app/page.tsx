@@ -1,8 +1,19 @@
 'use client'
 
+import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from "@ton/core";
+import WebApp from '@twa-dev/sdk';
+
+interface UserData {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+  language_code: string;
+  is_premium?: boolean;
+}
 
 export default function Home() {
   const [tonConnectUI] = useTonConnectUI();
@@ -12,22 +23,20 @@ export default function Home() {
     username?: string;
     firstName?: string;
   } | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-      const webAppData = window.Telegram.WebApp.initDataUnsafe;
-      console.log('Telegram WebApp Data:', webAppData);
-      
-      const { username, first_name } = webAppData.user || {};
-      console.log('Username:', username);
-      console.log('First Name:', first_name);
-      
-      setTelegramUser({
-        username,
-        firstName: first_name
-      });
-    } else {
-      console.log('Telegram WebApp not available');
+    try {
+      const webAppUser = WebApp.initDataUnsafe.user;
+      if (webAppUser) {
+        setTelegramUser({
+          username: webAppUser.username,
+          firstName: webAppUser.first_name
+        });
+        setUserData(webAppUser as UserData);
+      }
+    } catch (error) {
+      console.error('Error accessing Telegram WebApp:', error);
     }
   }, []);
 
