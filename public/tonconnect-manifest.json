@@ -1,5 +1,5 @@
 {
-  "url": "https://your-app.com",
-  "name": "Your App Name",
-  "iconUrl": "https://your-app.com/icon.png"
+  "url": "https://ton-sdk-button.vercel.app",
+  "name": "TON SDK Button",
+  "iconUrl": "/icon.png"
 } 
