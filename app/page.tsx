@@ -95,15 +95,13 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="text-4xl font-bold mb-8">TON Connect Demo</h1>
       
-      {telegramUser && (
-        <div className="mb-6 text-center">
-          <p className="text-lg">
-            Welcome, {telegramUser.username ? 
-              `@${telegramUser.username}` : 
-              telegramUser.firstName || 'Guest'}
-          </p>
-        </div>
-      )}
+      <div className="text-xl mb-8">
+        {telegramUser ? (
+          <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
+        ) : (
+          <p>Not logged in via Telegram</p>
+        )}
+      </div>
 
       {tonWalletAddress ? (
         <div className="flex flex-col items-center">
