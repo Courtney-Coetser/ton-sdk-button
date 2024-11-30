@@ -15,11 +15,19 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-      const { username, first_name } = window.Telegram.WebApp.initDataUnsafe.user || {};
+      const webAppData = window.Telegram.WebApp.initDataUnsafe;
+      console.log('Telegram WebApp Data:', webAppData);
+      
+      const { username, first_name } = webAppData.user || {};
+      console.log('Username:', username);
+      console.log('First Name:', first_name);
+      
       setTelegramUser({
         username,
         firstName: first_name
       });
+    } else {
+      console.log('Telegram WebApp not available');
     }
   }, []);
 
