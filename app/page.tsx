@@ -1,10 +1,8 @@
 'use client'
 
-import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from "@ton/core";
-import WebApp from '@twa-dev/sdk';
 
 interface UserData {
   id: number;
@@ -23,7 +21,6 @@ export default function Home() {
     username?: string;
     firstName?: string;
   } | null>(null);
-  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
     try {
@@ -33,7 +30,6 @@ export default function Home() {
           username: webAppUser.username,
           firstName: webAppUser.first_name
         });
-        setUserData(webAppUser as UserData);
       }
     } catch (error) {
       console.error('Error accessing Telegram WebApp:', error);
@@ -106,7 +102,10 @@ export default function Home() {
       
       <div className="text-xl mb-8">
         {telegramUser ? (
-          <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
+          <div className="text-center">
+            <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
+            {telegramUser.firstName && <p className="text-sm text-gray-500">Name: {telegramUser.firstName}</p>}
+          </div>
         ) : (
           <p>Not logged in via Telegram</p>
         )}
