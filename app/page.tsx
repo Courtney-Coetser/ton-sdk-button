@@ -1,17 +1,10 @@
 'use client'
 
+import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from "@ton/core";
-
-interface UserData {
-  id: number;
-  first_name: string;
-  last_name?: string;
-  username?: string;
-  language_code: string;
-  is_premium?: boolean;
-}
+import WebApp from '@twa-dev/sdk';
 
 export default function Home() {
   const [tonConnectUI] = useTonConnectUI();
@@ -102,10 +95,7 @@ export default function Home() {
       
       <div className="text-xl mb-8">
         {telegramUser ? (
-          <div className="text-center">
-            <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
-            {telegramUser.firstName && <p className="text-sm text-gray-500">Name: {telegramUser.firstName}</p>}
-          </div>
+          <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
         ) : (
           <p>Not logged in via Telegram</p>
         )}
