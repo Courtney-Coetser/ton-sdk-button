@@ -6,14 +6,18 @@ import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from "@ton/core";
 import WebApp from '@twa-dev/sdk';
 
+interface TelegramUser {
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  id?: number;
+}
+
 export default function Home() {
   const [tonConnectUI] = useTonConnectUI();
   const [tonWalletAddress, setTonWalletAddress] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [telegramUser, setTelegramUser] = useState<{
-    username?: string;
-    firstName?: string;
-  } | null>(null);
+  const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
   const [isWalletLoading, setIsWalletLoading] = useState(false);
   const [isTelegramLoading, setIsTelegramLoading] = useState(false);
 
@@ -23,7 +27,9 @@ export default function Home() {
       if (webAppUser) {
         setTelegramUser({
           username: webAppUser.username,
-          firstName: webAppUser.first_name
+          firstName: webAppUser.first_name,
+          lastName: webAppUser.last_name,
+          id: webAppUser.id
         });
       }
     } catch (error) {
@@ -103,7 +109,11 @@ export default function Home() {
       
       <div className="text-xl mb-8">
         {telegramUser ? (
-          <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
+          <div className="space-y-2">
+            <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
+            {telegramUser.lastName && <p>Last Name: {telegramUser.lastName}</p>}
+            {telegramUser.id && <p>ID: {telegramUser.id}</p>}
+          </div>
         ) : (
           <p>Not logged in via Telegram</p>
         )}
