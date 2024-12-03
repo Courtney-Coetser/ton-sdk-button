@@ -1,0 +1,17 @@
+{
+  "url": "https://ton-sdk-button-f7u88kumr-courtneycoetsers-projects.vercel.app",
+  "name": "TON Connect Demo",
+  "iconUrl": "https://ton-sdk-button-f7u88kumr-courtneycoetsers-projects.vercel.app/ton-connect-logo.png",
+  "termsOfUseUrl": "https://ton-sdk-button-f7u88kumr-courtneycoetsers-projects.vercel.app/terms",
+  "privacyPolicyUrl": "https://ton-sdk-button-f7u88kumr-courtneycoetsers-projects.vercel.app/privacy",
+  "manifest_version": 0,
+  "version": "0.1.0",
+  "image": {
+    "light": "https://ton-sdk-button-f7u88kumr-courtneycoetsers-projects.vercel.app/ton-connect-logo.png",
+    "dark": "https://ton-sdk-button-f7u88kumr-courtneycoetsers-projects.vercel.app/ton-connect-logo.png",
+    "size": {
+      "width": 120,
+      "height": 120
+    }
+  }
+} 
