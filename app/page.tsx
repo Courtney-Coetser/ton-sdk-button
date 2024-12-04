@@ -14,6 +14,7 @@ interface TelegramUser {
   languageCode?: string;
   isPremium?: boolean;
   allowsWriteToPm?: boolean;
+  canWriteToPm?: boolean;
   photoUrl?: string;
 }
 
@@ -33,7 +34,12 @@ export default function Home() {
           username: webAppUser.username,
           firstName: webAppUser.first_name,
           lastName: webAppUser.last_name,
-          id: webAppUser.id
+          id: webAppUser.id,
+          languageCode: webAppUser.language_code,
+          isPremium: webAppUser.is_premium,
+          allowsWriteToPm: webAppUser.allows_write_to_pm,
+          canWriteToPm: webAppUser.can_write_to_pm,
+          photoUrl: webAppUser.photo_url
         });
       }
     } catch (error) {
