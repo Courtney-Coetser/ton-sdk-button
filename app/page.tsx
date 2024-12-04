@@ -6,25 +6,14 @@ import { useTonConnectUI } from '@tonconnect/ui-react';
 import { Address } from "@ton/core";
 import WebApp from '@twa-dev/sdk';
 
-interface TelegramUser {
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  id?: number;
-  languageCode?: string;
-  isPremium?: boolean;
-  allowsWriteToPm?: boolean;
-  canWriteToPm?: boolean;
-  photoUrl?: string;
-}
-
 export default function Home() {
   const [tonConnectUI] = useTonConnectUI();
   const [tonWalletAddress, setTonWalletAddress] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [telegramUser, setTelegramUser] = useState<TelegramUser | null>(null);
-  const [isWalletLoading, setIsWalletLoading] = useState(false);
-  const [isTelegramLoading, setIsTelegramLoading] = useState(false);
+  const [telegramUser, setTelegramUser] = useState<{
+    username?: string;
+    firstName?: string;
+  } | null>(null);
 
   useEffect(() => {
     try {
@@ -32,18 +21,11 @@ export default function Home() {
       if (webAppUser) {
         setTelegramUser({
           username: webAppUser.username,
-          firstName: webAppUser.first_name,
-          lastName: webAppUser.last_name,
-          id: webAppUser.id,
-          languageCode: webAppUser.language_code,
-          isPremium: webAppUser.is_premium,
-          allowsWriteToPm: webAppUser.allows_write_to_pm,
-          canWriteToPm: webAppUser.can_write_to_pm,
-          photoUrl: webAppUser.photo_url
+          firstName: webAppUser.first_name
         });
       }
     } catch (error) {
-      console.error('Error accessing Telegram WebApp:', error instanceof Error ? error.message : error);
+      console.error('Error accessing Telegram WebApp:', error);
     }
   }, []);
 
@@ -84,17 +66,11 @@ export default function Home() {
   }, [tonConnectUI, handleWalletConnection, handleWalletDisconnection]);
 
   const handleWalletAction = async () => {
-    try {
-      setIsWalletLoading(true);
-      if (tonConnectUI.connected) {
-        await tonConnectUI.disconnect();
-      } else {
-        await tonConnectUI.openModal();
-      }
-    } catch (error) {
-      console.error('Wallet action failed:', error);
-    } finally {
-      setIsWalletLoading(false);
+    if (tonConnectUI.connected) {
+      setIsLoading(true);
+      await tonConnectUI.disconnect();
+    } else {
+      await tonConnectUI.openModal();
     }
   };
 
@@ -119,11 +95,7 @@ export default function Home() {
       
       <div className="text-xl mb-8">
         {telegramUser ? (
-          <div className="space-y-2">
-            <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
-            {telegramUser.lastName && <p>Last Name: {telegramUser.lastName}</p>}
-            {telegramUser.id && <p>ID: {telegramUser.id}</p>}
-          </div>
+          <p>Logged in as: {telegramUser.username ? `@${telegramUser.username}` : telegramUser.firstName || 'Guest'}</p>
         ) : (
           <p>Not logged in via Telegram</p>
         )}
