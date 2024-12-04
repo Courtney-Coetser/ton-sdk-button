@@ -1,7 +1,11 @@
-'use client'
-
 import "./globals.css";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+
+export const metadata = {
+  title: 'TON Connect Demo',
+  description: 'Connect your TON wallet and interact with the TON blockchain',
+  viewport: 'width=device-width, initial-scale=1',
+};
 
 export default function RootLayout({
   children,
@@ -21,9 +25,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-export const metadata = {
-  title: 'TON Connect Demo',
-  description: 'Connect your TON wallet and interact with the TON blockchain',
-  viewport: 'width=device-width, initial-scale=1',
-};
